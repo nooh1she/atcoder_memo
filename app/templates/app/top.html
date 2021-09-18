@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <ul>
+        <li>
+            <a href="{% url 'app:submit' %}" class="button-link">記録</a>
+        </li>
+        <li>
+            <a href="#" class="button-link">検索</a>
+        </li>
+        <li>
+            <a href="#" class="button-link">編集</a>
+        </li>
+    </ul>
+</div>
+
+<style>
+
+    ul li {
+        position: relative;
+        list-style-type: none!important;
+        padding: 0.5em;
+        margin-bottom: 5px;
+        line-height: 1.5;
+    }
+
+    .button-link {
+        display: inline-block;
+        padding: 20px 100px;
+        text-decoration: none;
+        background: rgb(190, 190, 190);
+        color: rgb(255, 255, 255);
+    }
+    .button-link:hover {
+        transition: all .0.5s linear;
+        background:  rgb(1, 100, 1);
+        color: rgb(255, 255, 255);
+    }
+
+</style>
+{% endblock %}
