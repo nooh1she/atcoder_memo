@@ -1,5 +1,16 @@
+{% extends "base.html" %}
 {% load static %}
 
 {% block content %}
+<div class="title">一覧</div>
 
+<div class="container">
+    <ol>
+        <!-- Djangoからitemsを受け取る -->
+        {% for item in items %}
+            <li>
+                <div class="card">{{ item.name }}</div>
+            </li>
+    </ol>
+</div>
 {% endblock %}
