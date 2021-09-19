@@ -8,20 +8,22 @@ urlpatterns = [
     path('', views.top, name = 'top'),
 
     #問題の登録画面への遷移
-    path('move_create/', views.move_create, name = 'move_create'),
+    path('create/', views.create, name = 'create'),
     #問題の登録フォーム
-    path('create/', views.create_problem, name = 'create'),
+    path('done_create/', views.done_create, name = 'done_create'),
 
 
     #問題の編集画面への遷移
-    #path('move_modify/', views.move_modify, name = 'move_modify'),
+    path('modify/<int:pk>', views.modify, name = 'modify'),
     #問題の編集画面
-    #path('modify/', views.modify_problem, name= 'modify'),
+    path('done_modify/', views.done_modify, name= 'done_modify'),
+    #問題の削除
+    path('done_delete/<int:pk>', views.done_delete, name = 'done_delete'),
+
 
     #問題の一覧画面
     path('items/', views.items_problem, name = 'items'),
-
-    #問題の閲覧・検索
-    #path('items', views.items, name = 'items')
+    #問題の詳細画面
+    path('content/<int:pk>', views.content_problem, name = 'content')
 
 ]
