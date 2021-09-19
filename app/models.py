@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.postgres.fields import ArrayField
 
 # Create your models here.
 
@@ -11,8 +10,7 @@ class Problem(models.Model):
     #問題のatcoder URL
     site_url = models.URLField('URL')
     #登録したタグ
-    #tag = models.CharField('タグ', max_length = 50)
-    tags = ArrayField(models.CharField(max_length=30, blank = True))
+    tags = models.TextField('タグ', blank = True)
     #書いたコード
     code = models.TextField('自分の書いたコード', blank = True)
     #メモ
