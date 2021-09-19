@@ -1,5 +1,7 @@
 import os
 import dj_database_url
+import django_heroku
+from pathlib import Path
 
 
 
@@ -23,7 +25,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'whitenoise.runserver.nostatic',
+    'whitenoise.runserver_nostatic',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
