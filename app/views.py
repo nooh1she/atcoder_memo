@@ -8,34 +8,58 @@ from app.models import Problem
 def top(request):
     return render(request, 'app/top.html')
 
-def submit(request):
-    return render(request, 'app/submit.html')
+#問題の登録画面への遷移
+def move_create(request):
+    return render(request, 'app/move_create.html')
 
 #問題の登録
-def form_submit(request):
+def create_problem(request):
 
-    problem = Problem()
     if request.method == 'POST':
         #name
         name = request.POST['name']
         #url
         site_url = request.POST['site_url']
         #tag
-        tags = request.POST['tag']
+        tags = request.POST['tags']
         #code
         code = request.POST['code']
         #memo
         memo = request.POST['memo']
-        """tagで、'#'で登録されたタグを分離"""
-        tag = tag.split('#')[1::]
+        
+        """tagで、'#', ' ', ',', で登録されたタグを分離"""
+        #tags = tags.split('#')[1::]
+        tag_new = ''
+        split_char = ['#', ' ', ',']
+        for chara in tags:
+            if tags in split_char:
+                tag_new += ' '
+            else:
+                tag_new += chara
 
         #レコードに挿入
-        problem.objects.create(name = name, site_url = site_url, 
-                                tags = tags, code = code, memo = memo)
+        Problem.objects.create(name = name, site_url = site_url, 
+                                tags = tag_new, code = code, memo = memo)
 
     else:
         return render(request, 'app/top.html')
     
     return render(request, 'app/top.html')
+
+
+#問題の編集画面への遷移
+def move_modify(request, problem_id=None):
+    pass
+#問題の編集
+def modify_problem(request):
+    pass
+
+
+#問題の一覧画面への遷移
+def items_problem(request):
+    items = Problem.objects.all()
+    render(request, 'app/items.html', items)
+
+
 
 
