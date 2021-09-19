@@ -1,5 +1,45 @@
 {% load static %}
 
 {% block content %}
+<div class="title">内容</div>
+
+<div class="container">
+    <div>
+        <ul>
+            <li>
+                <p>問題 : {{ Problem.name }}</p>
+            </li>
+            <li>
+                <p>URL : {{ Problem.site_url }}</p>
+            </li>
+            <li>
+                <p>タグ : {{ Problem.tags }}</p>
+            </li>
+            <li>
+                <p>コード : {{ Problem.code }}</p>
+            </li>
+            <li>
+                <p>メモ : {{ Problem.memo }}</p>
+            </li>
+        </ul>    
+    </div>
+
+    <div>
+        <ul>
+            <li>
+                <a href="{% url 'app:modify' pk %}" class="button-link">編集</a>
+            </li>
+            <li>
+                <a href="{% url 'app:done_delete' pk %}" class="button-link">削除</a>
+            </li>
+            <li>
+                <a href="#" class="button-link">編集</a>
+            </li>
+        </ul>
+    </div>
+    
+
+
+</div>
 
 {% endblock %}

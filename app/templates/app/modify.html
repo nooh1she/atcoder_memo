@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="title">修正</div>
+
+<div class="container">
+
+    <form action="{% url 'app:done_modify' %}" method="post">
+        {% csrf_token %}
+        <div class="card">
+            <label for="name">問題: </label>
+            <input id="name" type="text" name="name">
+        </div>
+        <div class="card">
+            <label for="site_url">URL: </label>
+            <input id="site_url" type="text" name="site_url"> 
+        </div>
+        <div class="card">
+            <label for="tags">タグ: </label>
+            <input id="tags" type="text" name="tags"> 
+        </div>
+        <div class="card">
+            <label for="code">コード: </label>
+            <textarea id="code" name="code" cols="30" rows="10"></textarea>
+        </div>
+        <div class="card">
+            <label for="memo">メモ: </label>
+            <textarea id="memo" name="memo" cols="30" rows="10"></textarea>
+        <div class="button-div">
+            <input type="submit" value="修正" class="button">
+        </div>
+        
+        
+    </form>
+</div>
+
+<style>
+    .card {
+        position: relative;
+        width: 80%;
+        margin: 20px 3%;
+    }
+    .card input[type='text'], .card textarea {
+        font-size: 12px;
+        line-height: 15px;
+        font-family: sans-serif;
+
+        box-sizing: border-box;
+        width: 100%;
+        padding: 0.3em;
+        transition: 0.1s;
+        letter-spacing: 0.5px;
+        color: rgb(0, 0, 0);
+        border: 2.5px solid #40444b;
+        border-radius: 4px;
+    }
+    .card input[type='text']:hover, .card textarea:hover {
+        border: 2.5px solid rgb(45, 155, 45);
+        outline: none;
+    }
+    .card input[type='text']:focus, .card textarea:focus {
+        border: 2.5px solid rgb(45, 155, 45);
+        outline: none;
+    }
+    .button-div {
+        text-align: center;
+        margin: 1em;
+    }
+    .button {
+        display       : inline-block;
+        border-radius : 5%;          /* 角丸       */
+        font-size     : 18pt;        /* 文字サイズ */
+        text-align    : center;      /* 文字位置   */
+        cursor        : pointer;     /* カーソル   */
+        padding       : 12px 12px;   /* 余白       */
+        background    : rgb(255, 255, 255);     /* 背景色     */
+        color         : #40444b;     /* 文字色     */
+        line-height   : 1em;         /* 1行の高さ  */
+        transition    : .3s;         /* なめらか変化 */
+        border        : 2px solid #40444b;    /* 枠の指定 */
+    }
+    .button:hover {
+        box-shadow    : none;        /* カーソル時の影消去 */
+        color         : rgb(45, 155, 45);     /* 文字色     */
+        border        : 2px solid rgb(45, 155, 45);    /* 枠の指定 */
+    }
+    
+</style>
+
+{% endblock %}
