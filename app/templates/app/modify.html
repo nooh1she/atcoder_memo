@@ -10,23 +10,23 @@
         {% csrf_token %}
         <div class="card">
             <label for="name">問題: </label>
-            <input id="name" type="text" name="name">
+            <input id="name" type="text" name="name" value="{{ Problem.name }}">
         </div>
         <div class="card">
             <label for="site_url">URL: </label>
-            <input id="site_url" type="text" name="site_url"> 
+            <input id="site_url" type="text" name="site_url" value="{{ Problem.site_url}}"> 
         </div>
         <div class="card">
             <label for="tags">タグ: </label>
-            <input id="tags" type="text" name="tags"> 
+            <input id="tags" type="text" name="tags" value="{{ Problem.tags }}"> 
         </div>
         <div class="card">
             <label for="code">コード: </label>
-            <textarea id="code" name="code" cols="30" rows="10"></textarea>
+            <textarea id="code" name="code" cols="30" rows="10">{{ Problem.code }}</textarea>
         </div>
         <div class="card">
             <label for="memo">メモ: </label>
-            <textarea id="memo" name="memo" cols="30" rows="10"></textarea>
+            <textarea id="memo" name="memo" cols="30" rows="10">{{ Problem.memo }}</textarea>
         <div class="button-div">
             <input type="submit" value="修正" class="button">
         </div>
