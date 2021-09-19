@@ -31,12 +31,17 @@ def create_problem(request):
         """tagで、'#', ' ', ',', で登録されたタグを分離"""
         #tags = tags.split('#')[1::]
         tag_new = ''
+        cnt = 0
         split_char = ['#', ' ', ',']
         for chara in tags:
-            if tags in split_char:
-                tag_new += ' '
+            if chara in split_char:
+                if cnt != 0:
+                    tag_new += ' '
             else:
                 tag_new += chara
+            cnt += 0
+
+        print(tag_new)
 
         #レコードに挿入
         Problem.objects.create(name = name, site_url = site_url, 
@@ -60,7 +65,7 @@ def modify_problem(request):
 #問題の一覧画面への遷移
 def items_problem(request):
     items = Problem.objects.all()
-    render(request, 'app/items.html', items)
+    return render(request, 'app/items.html', {'items':items})
 
 
 
