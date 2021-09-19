@@ -18,6 +18,7 @@ def create_problem(request):
     if request.method == 'POST':
         #name
         name = request.POST['name']
+        print(name)
         #url
         site_url = request.POST['site_url']
         #tag
@@ -42,6 +43,7 @@ def create_problem(request):
                                 tags = tag_new, code = code, memo = memo)
 
     else:
+        print("test")
         return render(request, 'app/top.html')
     
     return render(request, 'app/top.html')

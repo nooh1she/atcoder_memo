@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="title">一覧</div>
+
+<div class="container">
+    <ul>
+        <!-- Djangoからitemsを受け取る -->
+        {% for item in items %}
+            <li>
+                <div class="item">{{ item.name }}</div>
+            </li>
+            <li>
+                <div class="item">{{ item.name }}</div>
+            </li>
+    </ol>
+</div>
+
+<style>
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    ul li {
+        position: relative;
+        list-style-type: none!important;
+        padding: 0.5em;
+        margin-bottom: 1px;
+        line-height: 1.5;
+    }
+
+    .item {
+        display: inline-block;
+        padding: 20px 100px;
+        text-decoration: none;
+        color: rgb(190, 190, 190);
+        border: 2px solid rgb(45, 155, 45);
+    }
+</style>
+{% endblock %}

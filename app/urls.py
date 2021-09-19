@@ -19,7 +19,6 @@ urlpatterns = [
     #問題の編集画面
     path('modify/', views.modify_problem, name= 'modify'),
 
-
     #問題の一覧画面
     path('items/', views.items_problem, name = 'items'),
 
