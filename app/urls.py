@@ -14,16 +14,16 @@ urlpatterns = [
 
 
     #問題の編集画面への遷移
-    path('modify/<int:pk>', views.modify, name = 'modify'),
+    path('modify/<int:pk>/', views.modify, name = 'modify'),
     #問題の編集画面
-    path('done_modify/', views.done_modify, name= 'done_modify'),
+    path('done_modify/<int:pk>/', views.done_modify, name= 'done_modify'),
     #問題の削除
-    path('done_delete/<int:pk>', views.done_delete, name = 'done_delete'),
+    path('done_delete/<int:pk>/', views.done_delete, name = 'done_delete'),
 
 
     #問題の一覧画面
     path('items/', views.items_problem, name = 'items'),
     #問題の詳細画面
-    path('content/<int:pk>', views.content_problem, name = 'content')
+    path('content/<int:pk>/', views.content_problem, name = 'content')
 
 ]

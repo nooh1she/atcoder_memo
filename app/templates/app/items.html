@@ -9,7 +9,7 @@
         <!-- Djangoからitemsを受け取る -->
         {% for item in items %}
             <li>
-                <div class="item">{{ item.name }}</div>
+                <div class="item"><a href="{% url 'app:content' item.pk %}">{{ item.name }}</a></div>
             </li>
         {% endfor %}
     </ul>
@@ -34,7 +34,7 @@
         display: inline-block;
         padding: 20px 100px;
         text-decoration: none;
-        color: rgb(190, 190, 190);
+        color: rgb(100, 100, 100);
         border: 2px solid rgb(45, 155, 45);
     }
 </style>

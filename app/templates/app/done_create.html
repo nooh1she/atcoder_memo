@@ -1,13 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div class="title">登録しました！</div>
+
 <div class="container">
     <ul>
         <li>
-            <a href="{% url 'app:create' %}" class="button-link">記録</a>
+            <a href="{% url 'app:top' %}" class="button-link">トップ</a>
         </li>
         <li>
-            <a href="{% url 'app:items' %}" class="button-link">検索</a>
+            <a href="{% url 'app:items' %}" class="button-link">登録</a>
         </li>
     </ul>
 </div>
