@@ -1,1 +1,1 @@
-web: gunicorn atcoder_memo.wsgi
+web: gunicorn atcoder-memo.wsgi
