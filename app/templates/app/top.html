@@ -4,10 +4,10 @@
 <div class="container">
     <ul>
         <li>
-            <a href="{% url 'app:submit' %}" class="button-link">記録</a>
+            <a href="{% url 'app:move_create' %}" class="button-link">記録</a>
         </li>
         <li>
-            <a href="#" class="button-link">検索</a>
+            <a href="{% url 'app:items' %}" class="button-link">検索</a>
         </li>
         <li>
             <a href="#" class="button-link">編集</a>
@@ -40,7 +40,7 @@
     }
     .button-link:hover {
         transition: all .0.5s linear;
-        background:  rgb(1, 100, 1);
+        background:  rgb(45, 155, 45);
         color: rgb(255, 255, 255);
     }
 

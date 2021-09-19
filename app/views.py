@@ -18,22 +18,25 @@ def form_submit(request):
     if request.method == 'POST':
         #name
         name = request.POST['name']
+        print(name)
         #url
         site_url = request.POST['site_url']
         #tag
-        tags = request.POST['tag']
+        tags = request.POST['tags']
         #code
         code = request.POST['code']
         #memo
         memo = request.POST['memo']
         """tagで、'#'で登録されたタグを分離"""
-        tag = tag.split('#')[1::]
+        tags = tags.split('#')[1::]
 
         #レコードに挿入
         problem.objects.create(name = name, site_url = site_url, 
                                 tags = tags, code = code, memo = memo)
+        problem.save()
 
     else:
+        print("test")
         return render(request, 'app/top.html')
     
     return render(request, 'app/top.html')
