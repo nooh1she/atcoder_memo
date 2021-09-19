@@ -9,7 +9,7 @@
         <!-- Djangoからitemsを受け取る -->
         {% for item in items %}
             <li>
-                <div class="item">{{ item.name }}</div>
+                <div class="item"><a href="{% url 'app:content' item.pk %}">{{ item.name }}</a></div>
             </li>
         {% endfor %}
     </ul>

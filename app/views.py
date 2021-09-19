@@ -88,7 +88,7 @@ def done_modify(request, pk):
 
 #問題の削除
 def done_delete(request, pk):
-    Problem.objects.delete(pk = pk)
+    Problem.objects.filter(pk = pk).delete()
     return render(request, 'app/done_delete.html')
 
 
