@@ -10,3 +10,32 @@ def top(request):
 
 def submit(request):
     return render(request, 'app/submit.html')
+
+#問題の登録
+def form_submit(request):
+
+    problem = Problem()
+    if request.method == 'POST':
+        #name
+        name = request.POST['name']
+        #url
+        site_url = request.POST['site_url']
+        #tag
+        tags = request.POST['tag']
+        #code
+        code = request.POST['code']
+        #memo
+        memo = request.POST['memo']
+        """tagで、'#'で登録されたタグを分離"""
+        tag = tag.split('#')[1::]
+
+        #レコードに挿入
+        problem.objects.create(name = name, site_url = site_url, 
+                                tags = tags, code = code, memo = memo)
+
+    else:
+        return render(request, 'app/top.html')
+    
+    return render(request, 'app/top.html')
+
+
