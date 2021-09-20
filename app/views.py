@@ -180,7 +180,9 @@ def content_problem(request, pk):
     problem = get_object_or_404(Problem, pk=pk)
     return render(request, 'app/content.html', {'Problem': problem, 'pk': pk})
 
-
+#ログアウトの確認
+def confirm_signout(request):
+    return render(request, 'app/confirm_signout.html')
 
 
 

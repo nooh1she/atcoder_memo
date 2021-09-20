@@ -24,6 +24,9 @@ urlpatterns = [
     #問題の一覧画面
     path('items/', views.items_problem, name = 'items'),
     #問題の詳細画面
-    path('content/<int:pk>/', views.content_problem, name = 'content')
+    path('content/<int:pk>/', views.content_problem, name = 'content'),
+
+    #ログアウト確認
+    path('confirm_signout/', views.confirm_signout, name = 'confirm_signout'),
 
 ]

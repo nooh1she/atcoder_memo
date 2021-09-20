@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "app/base.html" %}
 {% load static %}
 
 {% block content %}
@@ -12,7 +12,7 @@
     <li><div class="box">{{ Problem.site_url }}</div></li>
 
     <li class="block">タグ</li>
-    <li><div class="box">{{ Problem.tags }}</div></li>
+    <li><div class="box">{{ Problem.tags_visible }}</div></li>
 
     <li class="block">コード</li>
     <li> <div class="box-large">{{ Problem.code }}</div></li>

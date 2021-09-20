@@ -1,17 +1,14 @@
 {% extends "app/base.html" %}
 
 {% block content %}
-<div class="title">修正しました！</div>
+<div class="title">ログアウトしますか？</div>
 
 <ul>
     <li>
-        <a href="{% url 'app:top' %}" class="button-link">トップ</a>
+        <a href="{% url 'app:top' %}" class="button-link">トップに戻る</a>
     </li>
     <li>
-        <a href="{% url 'app:content' pk  %}" class="button-link">内容</a>
-    </li>
-    <li>
-        <a href="{% url 'app:items' %}" class="button-link">一覧</a>
+        <a href="{% url 'account:signout' %}" class="button-link">ログアウトする</a>
     </li>
 </ul>
 
