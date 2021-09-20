@@ -13,7 +13,6 @@ from django.contrib.auth.decorators import login_required
 #トップページ
 @login_required
 def top(request):
-    print(type(Problem.objects.all()))
     return render(request, 'app/top.html')
 
 
@@ -32,7 +31,6 @@ def done_create(request):
     for t in Tag.objects.all():
         all_tag_list[str(t)] = True
 
-    print('all:', all_tag_list)
     if request.method == 'POST':
 
         flag = True
@@ -56,7 +54,6 @@ def done_create(request):
         tag_list = []
         for chara in list(filter(None, re.split('#| |,', tag_visible))):
             if (len(chara) <= 50):
-                print('chara:', chara)
                 tag_new += chara + ' '
 
                 #タグを重複して作らないように、既存のタグをチェックする
@@ -68,8 +65,6 @@ def done_create(request):
                     #タグが存在するならオブジェクトを取得する
                     tag_list.append(Tag.objects.get(tag_name = chara))
 
-        print('tag_new:', tag_new)
-        print('tag_list:', tag_list)
 
         #nameバリデーション
         #name = validation_name(name)
@@ -95,11 +90,7 @@ def done_create(request):
         #Problem.objects.create(u_id = u_id, name = name, site_url = site_url, 
         #                        tags = tag_new, code = code, memo = memo)
 
-        print(problem.tags.all())
-        print(Problem.objects)
-
     else:
-        print("test")
         return render(request, 'app/done_create.html')
     
     #文字列で見せる用のタグをhtmlに返す
@@ -140,7 +131,6 @@ def done_modify(request, pk):
         for chara in list(filter(None, re.split('#| |,', tags))):
             if (len(chara) <= 50):
                 tag_new += chara + ' '
-                print('chara:', chara)
 
                 #タグを重複して作らないように、既存のタグをチェックする
                 if chara not in all_tag_list:
@@ -230,7 +220,6 @@ def search_problem(request):
         else:
             search_result = Problem.objects.filter(q_tags_search).distinct()
 
-        print(search_result)
 
         return render(request, 'app/items.html', {'search_result': search_result})
 
