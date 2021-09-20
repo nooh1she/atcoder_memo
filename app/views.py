@@ -159,10 +159,12 @@ def done_modify(request, pk):
 
     return render(request, 'app/done_modify.html', {'Problem': problem, 'pk': pk})
 
+
 #問題削除の確認
 @login_required
 def confirm_delete(request, pk):
     return render(request, 'app/confirm_delete.html', {'pk' : pk})
+
 
 #問題の削除
 @login_required
