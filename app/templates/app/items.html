@@ -4,29 +4,34 @@
 {% block content %}
 <div class="title">一覧</div>
 
-<div class="container">
-    <ul>
-        <!-- Djangoからitemsを受け取る -->
-        {% for item in items %}
-            <li>
-                <div class="item"><a href="{% url 'app:content' item.pk %}">{{ item.name }}</a></div>
-            </li>
-        {% endfor %}
-    </ul>
-</div>
+<ul>
+    <!-- Djangoからitemsを受け取る -->
+    {% for item in items %}
+        <li>
+            <a href="{% url 'app:content' item.pk %}" class="item">{{ item.name }}</a></
+        </li>
+    {% endfor %}
+</ul>
 
 <style>
-    .container {
+    .title {
         display: flex;
         justify-content: center;
         align-items: center;
-    }
+        margin-top: 10px;
 
-    ul li {
-        position: relative;
+        font-size: 36px;
+        color: rgb(100, 100, 100);
+    }
+    ul {
         list-style-type: none!important;
+        padding-top: 0;
+        padding-left: 0;
+    }
+    li {
+        text-align: center;
         padding: 0.5em;
-        margin-bottom: 1px;
+        margin-bottom: 0.5px;
         line-height: 1.5;
     }
 
@@ -34,7 +39,15 @@
         display: inline-block;
         padding: 20px 100px;
         text-decoration: none;
-        color: rgb(100, 100, 100);
+        width: 30%;
+        height: 20%;
+        color: rgb(125, 125, 125);
+        border: 2px solid rgb(150, 150, 150);
+    }
+    .item:hover {
+        transition: all .0.5s linear;
+        color: rgb(255, 255, 255);
+        background-color: rgb(45, 155, 45);
         border: 2px solid rgb(45, 155, 45);
     }
 </style>
