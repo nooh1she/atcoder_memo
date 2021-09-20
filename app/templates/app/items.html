@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-<div class="title">探す</div>
+<div class="title">検索/一覧</div>
 
 
 <form action="{% url 'app:search' %}" method="post">
@@ -19,8 +19,7 @@
         <!-- Djangoからsearch_resultを受け取る -->
         {% for item in search_result %}
             <li>
-                <a href="{% url 'app:content' item.pk %}" class="item">name : {{ item.name }}</a>
-                <div>tags : {{ item.tags_visible }}</div>
+                <a href="{% url 'app:content' item.pk %}" class="item"><div>name : {{ item.name }}</div><div>tags : {{ item.tags_visible }}</div></a>
             </li>
         {% endfor %}
     {% elif items %}
@@ -31,7 +30,7 @@
             </li>
         {% endfor %}
     {% else %}
-        <div>一致するタグはありませんでした</div>
+        <p class="error">一致するタグはありませんでした</p>
     {% endif %}
 </ul>
 
@@ -78,6 +77,26 @@
     .tags_search {
         text-align: center;
     }
+    .button {
+        display       : inline-block;
+
+        border-radius : 5%;
+        font-size     : 12pt;
+        text-align    : center;
+        cursor        : pointer;
+        padding       : 6px 6px;
+        background    : rgb(255, 255, 255);
+
+        color         : #40444b;
+        line-height   : 0.5em;
+        transition    : .3s;
+        border        : 2px solid #40444b;
+    }
+    .button:hover {
+        color         : rgb(45, 155, 45);
+        border        : 2px solid rgb(45, 155, 45);
+    }
+
     ul {
         list-style-type: none!important;
         padding-top: 0;
@@ -104,24 +123,8 @@
         background-color: rgb(45, 155, 45);
         border: 2px solid rgb(45, 155, 45);
     }
-    .button {
-        display       : inline-block;
-
-        border-radius : 5%;
-        font-size     : 12pt;
-        text-align    : center;
-        cursor        : pointer;
-        padding       : 6px 6px;
-        background    : rgb(255, 255, 255);
-
-        color         : #40444b;
-        line-height   : 0.5em;
-        transition    : .3s;
-        border        : 2px solid #40444b;
-    }
-    .button:hover {
-        color         : rgb(45, 155, 45);
-        border        : 2px solid rgb(45, 155, 45);
+    .error {
+        text-align: center;
     }
 </style>
 
