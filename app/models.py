@@ -18,7 +18,7 @@ class Problem(models.Model):
     #問題のタイトル
     name = models.CharField('問題', max_length = 50)
     #問題のatcoder URL
-    site_url = models.URLField('URL', max_length = 100)
+    site_url = models.URLField('URL', max_length = 150)
     #登録したタグ
     tags = models.TextField('タグ', blank = True)
     #書いたコード
@@ -29,10 +29,12 @@ class Problem(models.Model):
 
 #JSONクラスにおいて、非ASCIIでエスケープしないよう設定
 class StandardJSONField(JSONField):
+
     def get_prep_value(self, value):
         if value is not None:
             return json.dump(value, ensure_ascii=False)
         return value
+
 
 #JSONFieldで作成するクラス
 class SearchTag(models.Model):

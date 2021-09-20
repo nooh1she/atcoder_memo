@@ -3,24 +3,30 @@ from django.views.generic.list import ListView
 import re
 
 from app.models import Problem, SearchTag, User
+from .validation import validation_name, validation_url
 
-# Create your views here.
+#トップページ
 def top(request):
 
     return render(request, 'app/top.html')
+
 
 #問題の登録画面への遷移
 def create(request):
 
     return render(request, 'app/create.html')
 
+
 #問題の登録
 def done_create(request):
 
     if request.method == 'POST':
+
+        flag = True
+
         #name
         name = request.POST['name']
-        print(name)
+        validation_url(name)
         #url
         site_url = request.POST['site_url']
         #tag
@@ -30,6 +36,7 @@ def done_create(request):
         #memo
         memo = request.POST['memo']
         
+        
         """tagで、'#', ' ', ',', で登録されたタグを分離"""
         #tags = tags.split('#')[1::]
         tag_new = ''
@@ -38,6 +45,10 @@ def done_create(request):
             tag_new += chara + ' '
 
         print('tag_new:', tag_new)
+
+        #バリデーション
+        #valid_flag = valid_problem(name, site_url, tags, code, memo)
+
 
         #レコードに挿入
         Problem.objects.create(name = name, site_url = site_url, 
