@@ -3,35 +3,45 @@
 {% block content %}
 <div class="title">削除しました！</div>
 
-<div class="container">
-    <ul>
-        <li>
-            <a href="{% url 'app:top' %}" class="button-link">トップ</a>
-        </li>
-        <li>
-            <a href="{% url 'app:items' %}" class="button-link">一覧</a>
-        </li>
-    </ul>
-</div>
+<ul>
+    <li>
+        <a href="{% url 'app:top' %}" class="button-link">トップ</a>
+    </li>
+    <li>
+        <a href="{% url 'app:items' %}" class="button-link">一覧</a>
+    </li>
+</ul>
 
 <style>
-
-    .container {
+    .title {
         display: flex;
         justify-content: center;
         align-items: center;
-    }
+        margin-top: 10px;
 
-    ul li {
-        position: relative;
+        font-size: 36px;
+        color: rgb(100, 100, 100);
+    }
+    ul {
         list-style-type: none!important;
+        padding-left: 0;
+        padding-top: 100px;
+    }
+    li {
+        display: flex;
+        justify-content: center;
+        
         padding: 0.5em;
-        margin-bottom: 5px;
+        margin-bottom: 20px;
         line-height: 1.5;
     }
 
     .button-link {
         display: inline-block;
+        width: 60%;
+        text-align: center;
+        margin-left: 15%;
+        margin-right: 15%;
         padding: 20px 100px;
         text-decoration: none;
         background: rgb(190, 190, 190);

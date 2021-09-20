@@ -4,42 +4,77 @@
 {% block content %}
 <div class="title">修正</div>
 
-<div class="container">
-
-    <form action="{% url 'app:done_modify' pk %}" method="post">
-        {% csrf_token %}
-        <div class="card">
-            <label for="name">問題: </label>
-            <input id="name" type="text" name="name" value="{{ Problem.name }}">
-        </div>
-        <div class="card">
-            <label for="site_url">URL: </label>
-            <input id="site_url" type="text" name="site_url" value="{{ Problem.site_url}}"> 
-        </div>
-        <div class="card">
-            <label for="tags">タグ: </label>
-            <input id="tags" type="text" name="tags" value="{{ Problem.tags }}"> 
-        </div>
-        <div class="card">
-            <label for="code">コード: </label>
-            <textarea id="code" name="code" cols="30" rows="10">{{ Problem.code }}</textarea>
-        </div>
-        <div class="card">
-            <label for="memo">メモ: </label>
-            <textarea id="memo" name="memo" cols="30" rows="10">{{ Problem.memo }}</textarea>
-        <div class="button-div">
+<form action="{% url 'app:done_modify' pk %}" method="post">
+    {% csrf_token %}
+    <ul>
+        <li>
+            <div class="card">
+                <label for="name">問題</label>
+                <input id="name" type="text" name="name" value="{{ Problem.name }}">
+            </div>
+        </li>
+        <li>
+            <div class="card">
+                <label for="site_url">URL</label>
+                <input id="site_url" type="text" name="site_url" value="{{ Problem.site_url}}"> 
+            </div>
+        </li>
+        <li>
+            <div class="card">
+                <label for="tags">タグ</label>
+                <input id="tags" type="text" name="tags" value="{{ Problem.tags }}"> 
+            </div>
+        </li>
+        <li>
+            <div class="card">
+                <label for="code">コード</label>
+                <textarea id="code" name="code" cols="30" rows="10">{{ Problem.code }}</textarea>
+            </div>
+        </li>
+        <li>
+            <div class="card">
+                <label for="memo">メモ</label>
+                <textarea id="memo" name="memo" cols="30" rows="10">{{ Problem.memo }}</textarea>
+            </div>
+        </li>
+        <li>
             <input type="submit" value="修正" class="button">
-        </div>
-        
-        
-    </form>
-</div>
+            
+        </li>
+    </ul>    
+</form>
+
+
 
 <style>
+    .title {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
+
+        font-size: 36px;
+        color: rgb(100, 100, 100);
+    }
+    ul {
+        list-style-type: none!important;
+        padding-top: 0;
+        padding-left: 0;
+    }
+    li {
+        text-align: center;
+    }
+    label {
+        display: inline-block;
+        text-align: center;
+        width: 7em;
+        color: #40444b;
+        font-size: bold;
+    }
     .card {
         position: relative;
         width: 80%;
-        margin: 20px 3%;
+        margin: 40px 3%;
     }
     .card input[type='text'], .card textarea {
         font-size: 12px;
@@ -63,27 +98,25 @@
         border: 2.5px solid rgb(45, 155, 45);
         outline: none;
     }
-    .button-div {
-        text-align: center;
-        margin: 1em;
-    }
+    
     .button {
         display       : inline-block;
-        border-radius : 5%;          /* 角丸       */
-        font-size     : 18pt;        /* 文字サイズ */
-        text-align    : center;      /* 文字位置   */
-        cursor        : pointer;     /* カーソル   */
-        padding       : 12px 12px;   /* 余白       */
-        background    : rgb(255, 255, 255);     /* 背景色     */
-        color         : #40444b;     /* 文字色     */
-        line-height   : 1em;         /* 1行の高さ  */
-        transition    : .3s;         /* なめらか変化 */
-        border        : 2px solid #40444b;    /* 枠の指定 */
+
+        border-radius : 5%;
+        font-size     : 18pt;
+        text-align    : center;
+        cursor        : pointer;
+        padding       : 12px 12px;
+        background    : rgb(255, 255, 255);
+
+        color         : #40444b;
+        line-height   : 1em;
+        transition    : .3s;
+        border        : 2px solid #40444b;
     }
     .button:hover {
-        box-shadow    : none;        /* カーソル時の影消去 */
-        color         : rgb(45, 155, 45);     /* 文字色     */
-        border        : 2px solid rgb(45, 155, 45);    /* 枠の指定 */
+        color         : rgb(45, 155, 45);
+        border        : 2px solid rgb(45, 155, 45);
     }
     
 </style>

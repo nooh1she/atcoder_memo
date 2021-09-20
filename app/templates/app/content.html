@@ -1,44 +1,90 @@
+{% extends "base.html" %}
 {% load static %}
 
 {% block content %}
 <div class="title">内容</div>
 
-<div class="container">
-    <div>
-        <ul>
-            <li>
-                <p>問題 : {{ Problem.name }}</p>
-            </li>
-            <li>
-                <p>URL : {{ Problem.site_url }}</p>
-            </li>
-            <li>
-                <p>タグ : {{ Problem.tags }}</p>
-            </li>
-            <li>
-                <p>コード : {{ Problem.code }}</p>
-            </li>
-            <li>
-                <p>メモ : {{ Problem.memo }}</p>
-            </li>
-        </ul>    
-    </div>
+<ul>
+    <li class="block">問題</li>
+    <li><div class="box">{{ Problem.name }}</div></li>
 
-    <div>
-        <ul>
-            <li>
-                <a href="{% url 'app:items' %}" class="button-link">一覧</a>
-            </li>
-            <li>
-                <a href="{% url 'app:modify' pk %}" class="button-link">編集</a>
-            </li>
-            <li>
-                <a href="{% url 'app:done_delete' pk %}" class="button-link">削除</a>
-            </li>
-        </ul>
-    </div>
+    <li class="block">URL</li>
+    <li><div class="box">{{ Problem.site_url }}</div></li>
 
+    <li class="block">タグ</li>
+    <li><div class="box">{{ Problem.tags }}</div></li>
 
-</div>
+    <li class="block">コード</li>
+    <li> <div class="box-large">{{ Problem.code }}</div></li>
 
+    <li class="block">メモ</li>
+    <li><div class="box-large">{{ Problem.memo }}</div></li>
+</ul>  
+
+<ul>
+    <li>
+        <a href="{% url 'app:items' %}" class="button-link">一覧</a>
+    </li>
+    <li>
+        <a href="{% url 'app:modify' pk %}" class="button-link">編集</a>
+    </li>
+    <li>
+        <a href="{% url 'app:done_delete' pk %}" class="button-link">削除</a>
+    </li>
+</ul>
+
+<style>
+    .title {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
+
+        font-size: 36px;
+        color: rgb(100, 100, 100);
+    }
+    ul {
+        list-style-type: none!important;
+        padding-left: 0;
+        padding-top: 10px;
+    }
+    li {
+        display: flex;
+        justify-content: center;
+        
+        padding: 0.5em;  
+        line-height: 1.5;
+    }
+    .block {
+        padding-bottom: 0;
+    }
+    .box {
+        border: 2px solid #40444b;
+        display: inline-block;
+        width: 50px;
+        height: 25px;
+        margin-right: 10%;
+        margin-left: 10%;
+    }
+    .box-large {
+        border: 2px solid #40444b;
+        display: inline-block;
+        width: 50px;
+        height: 200px;
+        margin-right: 10%;
+        margin-left: 10%;
+    }
+    .button-link {
+        display: inline-block;
+        padding: 20px 100px;
+        text-decoration: none;
+        background: rgb(190, 190, 190);
+        color: rgb(255, 255, 255);
+    }
+    .button-link:hover {
+        transition: all .0.5s linear;
+        background:  rgb(45, 155, 45);
+        color: rgb(255, 255, 255);
+    }
+</style>
 {% endblock %}
