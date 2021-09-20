@@ -15,15 +15,15 @@
     <li><div class="box">{{ Problem.tags_visible }}</div></li>
 
     <li class="block">コード</li>
-    <li> <div class="box-large">{{ Problem.code }}</div></li>
+    <li> <div class="box-large">{{ Problem.code | linebreaksbr }}</div></li>
 
     <li class="block">メモ</li>
-    <li><div class="box-large">{{ Problem.memo }}</div></li>
+    <li><div class="box-large">{{ Problem.memo | linebreaksbr }}</div></li>
 </ul>  
 
 <ul>
     <li>
-        <a href="{% url 'app:items' %}" class="button-link">一覧</a>
+        <a href="{% url 'app:items' %}" class="button-link">検索/一覧</a>
     </li>
     <li>
         <a href="{% url 'app:modify' pk %}" class="button-link">編集</a>
@@ -80,6 +80,10 @@
         text-decoration: none;
         background: rgb(190, 190, 190);
         color: rgb(255, 255, 255);
+        text-align: center;
+        width: 60%;
+        margin-left: 20%;
+        margin-right: 20%;
     }
     .button-link:hover {
         transition: all .0.5s linear;
