@@ -1,4 +1,4 @@
-class NameError(Exception):
+class Name_Error(Exception):
     def __init__(self):
         pass
 

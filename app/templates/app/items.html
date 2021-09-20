@@ -2,15 +2,37 @@
 {% load static %}
 
 {% block content %}
-<div class="title">一覧</div>
+<div class="title">探す</div>
+
+
+<form action="{% url 'app:search' %}" method="post">
+    {% csrf_token %}
+    <div class="card">
+        <input type="text" name="tags_search" placeholder="タグで検索" class="tags_search">
+        <input type="submit" value="検索" class="button">
+    </div>
+</form>
+
 
 <ul>
-    <!-- Djangoからitemsを受け取る -->
-    {% for item in items %}
-        <li>
-            <a href="{% url 'app:content' item.pk %}" class="item">{{ item.name }}</a></
-        </li>
-    {% endfor %}
+    {% if search_result %}
+        <!-- Djangoからsearch_resultを受け取る -->
+        {% for item in search_result %}
+            <li>
+                <a href="{% url 'app:content' item.pk %}" class="item">name : {{ item.name }}</a>
+                <div>tags : {{ item.tags_visible }}</div>
+            </li>
+        {% endfor %}
+    {% elif items %}
+        <!-- Djangoからitemsを受け取る -->
+        {% for item in items %}
+            <li>
+                <a href="{% url 'app:content' item.pk %}" class="item"><div>name : {{ item.name }}</div><div>tags : {{ item.tags_visible }}</div></a>
+            </li>
+        {% endfor %}
+    {% else %}
+        <div>一致するタグはありませんでした</div>
+    {% endif %}
 </ul>
 
 <style>
@@ -23,6 +45,39 @@
         font-size: 36px;
         color: rgb(100, 100, 100);
     }
+    .card {
+        position: relative;
+        width: 50%;
+        margin: 40px 3%;
+        margin-left: 25%;
+        margin-right: 25%;
+        
+    }
+    .card input[type='text'] {
+        font-size: 12px;
+        line-height: 15px;
+        font-family: sans-serif;
+
+        box-sizing: border-box;
+        width: 100%;
+        padding: 0.3em;
+        transition: 0.1s;
+        letter-spacing: 0.5px;
+        color: rgb(0, 0, 0);
+        border: 2.5px solid #40444b;
+        border-radius: 4px;
+    }
+    .card input[type='text']:hover {
+        border: 2.5px solid rgb(45, 155, 45);
+        outline: none;
+    }
+    .card input[type='text']:focus {
+        border: 2.5px solid rgb(45, 155, 45);
+        outline: none;
+    }
+    .tags_search {
+        text-align: center;
+    }
     ul {
         list-style-type: none!important;
         padding-top: 0;
@@ -34,21 +89,39 @@
         margin-bottom: 0.5px;
         line-height: 1.5;
     }
-
     .item {
         display: inline-block;
         padding: 20px 100px;
         text-decoration: none;
         width: 30%;
-        height: 20%;
         color: rgb(125, 125, 125);
         border: 2px solid rgb(150, 150, 150);
     }
     .item:hover {
         transition: all .0.5s linear;
         color: rgb(255, 255, 255);
+
         background-color: rgb(45, 155, 45);
         border: 2px solid rgb(45, 155, 45);
+    }
+    .button {
+        display       : inline-block;
+
+        border-radius : 5%;
+        font-size     : 12pt;
+        text-align    : center;
+        cursor        : pointer;
+        padding       : 6px 6px;
+        background    : rgb(255, 255, 255);
+
+        color         : #40444b;
+        line-height   : 0.5em;
+        transition    : .3s;
+        border        : 2px solid #40444b;
+    }
+    .button:hover {
+        color         : rgb(45, 155, 45);
+        border        : 2px solid rgb(45, 155, 45);
     }
 </style>
 

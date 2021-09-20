@@ -1,14 +1,14 @@
 {% extends "app/base.html" %}
 
 {% block content %}
-<div class="title">削除しました！</div>
+<div class="title">削除しますか？</div>
 
 <ul>
     <li>
-        <a href="{% url 'app:top' %}" class="button-link">トップ</a>
+        <a href="{% url 'app:delete' pk %}" class="button-link">削除</a>
     </li>
     <li>
-        <a href="{% url 'app:items' %}" class="button-link">一覧</a>
+        <a href="{% url 'app:content' pk %}" class="button-link">戻る</a>
     </li>
 </ul>
 

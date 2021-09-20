@@ -2,19 +2,21 @@ from urllib import request, error
 import urllib
 
 from .models import Problem
-from .exceptions import NameError, UrlError
+from .exceptions import Name_Error, UrlError
 
 
 #nameのバリデーション
 def validation_name(name):
 
-    reuslt = name
-    if len(name) > 50:
-        retult = NameError('名前は50文字以下にしてください')
-    elif len(name) == 0:
-        result = NameError('問題名を入力してください')
+    result = name
 
-    return reuslt
+    if len(name) > 50:
+        result = Name_Error('名前は50文字以下にしてください')
+    elif len(name) == 0:
+        result = Name_Error('問題名を入力してください')
+
+    print(result)
+    return result
 
 
 #urlのバリデーション
