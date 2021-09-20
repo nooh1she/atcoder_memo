@@ -8,13 +8,21 @@
         <a href="{% url 'app:top' %}" class="button-link">トップ</a>
     </li>
     <li>
-        <a href="{% url 'app:items' %}" class="button-link">一覧</a>
+        <a href="{% url 'app:items' %}" class="button-link">検索/一覧</a>
     </li>
 </ul>
 
 
 <style>
+    .title {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
 
+        font-size: 36px;
+        color: rgb(100, 100, 100);
+    }
     ul {
         list-style-type: none!important;
         padding-left: 0;
