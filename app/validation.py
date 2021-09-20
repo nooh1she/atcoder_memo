@@ -11,6 +11,8 @@ def validation_name(name):
     reuslt = name
     if len(name) > 50:
         retult = NameError('名前は50文字以下にしてください')
+    elif len(name) == 0:
+        result = NameError('問題名を入力してください')
 
     return reuslt
 

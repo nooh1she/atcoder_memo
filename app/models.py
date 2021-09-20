@@ -3,24 +3,31 @@ from django.contrib.postgres.fields import JSONField
 
 import json
 
+from django.db.models.base import Model
+
 # Create your models here.
 
-#ログイン時に使用するUserモデル
-class User(models.Model):
+class Tag(models.Model):
 
-    user_name = models.CharField('ユーザー名', max_length = 50)
-    password = models.CharField('パスワード', max_length = 50)
+    tag_name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.tag_name
 
 
 #問題のモデル
 class Problem(models.Model):
 
+    #ユーザーネーム
+    u_id = models.IntegerField('ユーザid')
     #問題のタイトル
     name = models.CharField('問題', max_length = 50)
     #問題のatcoder URL
     site_url = models.URLField('URL', max_length = 150)
-    #登録したタグ
-    tags = models.TextField('タグ', blank = True)
+    #登録したタグ(内部)
+    tags = models.ManyToManyField(Tag, blank=True)
+    #タグ(見せる用)
+    tags_visible = models.TextField('タグ', blank=True)
     #書いたコード
     code = models.TextField('自分の書いたコード', blank = True)
     #メモ
@@ -28,7 +35,7 @@ class Problem(models.Model):
 
 
 #JSONクラスにおいて、非ASCIIでエスケープしないよう設定
-class StandardJSONField(JSONField):
+"""class StandardJSONField(JSONField):
 
     def get_prep_value(self, value):
         if value is not None:
@@ -39,15 +46,15 @@ class StandardJSONField(JSONField):
 #JSONFieldで作成するクラス
 class SearchTag(models.Model):
 
-    """tagごとに問題をまとめる
+    tagごとに問題をまとめる
     JSONFieldに以下のように登録する
     ・問題a,b,cが存在するとき
     JSONField - ['tag1'] : [a,b]
               - ['tag2'] : [b,c]
               ...
-    """
+    
     #JSONClass
-    tag_dic = StandardJSONField(blank = True)
+    tag_dic = StandardJSONField(blank = True)"""
 
 
     

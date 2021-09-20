@@ -19,8 +19,9 @@ def signup(request):
         except:
             # 合致するユーザーがなければDBに登録
             User.objects.create_user(username, email, password)
+            return redirect('account:signin')
 
-    return render(request, 'account/signin.html')
+    return render(request, 'account/signup.html')
 
 
 def signin(request):

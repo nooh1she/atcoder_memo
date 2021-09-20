@@ -1,36 +1,50 @@
+from django.db.models.fields.related_descriptors import ManyToManyDescriptor
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic.list import ListView
 import re
 
-from app.models import Problem, SearchTag, User
+from app.models import Problem, Tag
 from .validation import validation_name, validation_url
 
-#トップページ
-def top(request):
+from django.contrib.auth.decorators import login_required
 
+
+#トップページ
+@login_required
+def top(request):
+    t = Tag.objects.get(tag_name = "a")
+    li = Problem.objects.filter(tags = t)
+    print(li)
     return render(request, 'app/top.html')
 
 
 #問題の登録画面への遷移
+@login_required
 def create(request):
-
     return render(request, 'app/create.html')
 
 
 #問題の登録
+@login_required
 def done_create(request):
 
+    #既存のタグ一覧
+    all_tag_list = {}
+    for t in Tag.objects.all():
+        all_tag_list[str(t)] = True
+
+    print('all:', all_tag_list)
     if request.method == 'POST':
 
         flag = True
-
+        #userid
+        u_id = request.user.id
         #name
         name = request.POST['name']
-        validation_url(name)
         #url
         site_url = request.POST['site_url']
         #tag
-        tags = request.POST['tags']
+        tag_visible = request.POST['tags']
         #code
         code = request.POST['code']
         #memo
@@ -40,54 +54,102 @@ def done_create(request):
         """tagで、'#', ' ', ',', で登録されたタグを分離"""
         #tags = tags.split('#')[1::]
         tag_new = ''
-        for chara in re.split('#| |,', tags):
-            print(chara)
-            tag_new += chara + ' '
+        tag_list = []
+        for chara in re.split('#| |,', tag_visible):
+            if (len(chara) <= 50):
+                tag_new += chara + ' '
+
+                #タグを重複して作らないように、既存のタグをチェックする
+                if chara not in all_tag_list:
+                    t = Tag(tag_name = chara)
+                    tag_list.append(t)
+                    t.save()
+                else:
+                    #タグが存在するならオブジェクトを取得する
+                    tag_list.append(Tag.objects.get(tag_name = chara))
 
         print('tag_new:', tag_new)
+        print('tag_list:', tag_list)
 
         #バリデーション
-        #valid_flag = valid_problem(name, site_url, tags, code, memo)
+        print("id:", request.user.id)
 
+
+        #要素の登録
+        problem = Problem()
+        problem.u_id = u_id
+        problem.name = name
+        problem.site_url = site_url
+        problem.tags_visible = tag_new
+        problem.code = code
+        problem.memo = memo
+
+        problem.save()
+
+        problem.tags.set(tag_list)
 
         #レコードに挿入
-        Problem.objects.create(name = name, site_url = site_url, 
-                                tags = tag_new, code = code, memo = memo)
+        #Problem.objects.create(u_id = u_id, name = name, site_url = site_url, 
+        #                        tags = tag_new, code = code, memo = memo)
+
+        print(problem.tags.all())
+        print(Problem.objects)
 
     else:
         print("test")
         return render(request, 'app/done_create.html')
     
-    return render(request, 'app/done_create.html')
+    #文字列で見せる用のタグをhtmlに返す
+    return render(request, 'app/done_create.html', {tag_new: tag_new})
 
 
 #問題の編集画面への遷移
+@login_required
 def modify(request, pk):
     problem = get_object_or_404(Problem, pk = pk)
     return render(request, 'app/modify.html', {'Problem': problem, 'pk': pk})
 
 
 #問題の編集
+@login_required
 def done_modify(request, pk):
+
+    #既存のタグ一覧
+    all_tag_list = {}
+    for t in Tag.objects.all():
+        all_tag_list[str(t)] = True
 
     problem = get_object_or_404(Problem, pk = pk)
     if request.method == 'POST':
         #name
         problem.name = request.POST['name']
-
         #site_url
         problem.site_url = request.POST['site_url']
-
-        #tags
-        problem.tags = request.POST['tags']
-
         #code
         problem.code = request.POST['code']
-
         #memo
-        problem.code = request.POST['memo']
+        problem.memo = request.POST['memo']
 
-        problem.save()
+        #タグを分離
+        tags = request.POST['tags']
+        tag_new = ''
+        tag_list = []
+        for chara in re.split('#| |,', tags):
+            if (len(chara) <= 50):
+                tag_new += chara + ' '
+                print('chara:', chara)
+
+                #タグを重複して作らないように、既存のタグをチェックする
+                if chara not in all_tag_list:
+                    t = Tag(tag_name = chara)
+                    tag_list.append(t)
+                    t.save()
+                else:
+                    tag_list.append(Tag.objects.get(tag_name = chara))
+
+        problem.tags_visible = tag_new
+        problem.save()      
+        problem.tags.set(tag_list)
 
     else:
         return render(request, 'app/top.html')
@@ -96,6 +158,7 @@ def done_modify(request, pk):
 
 
 #問題の削除
+@login_required
 def done_delete(request, pk):
 
     Problem.objects.filter(pk = pk).delete()
@@ -103,6 +166,7 @@ def done_delete(request, pk):
 
 
 #問題の一覧画面への遷移
+@login_required
 def items_problem(request):
 
     items = Problem.objects.all()
@@ -110,10 +174,11 @@ def items_problem(request):
 
 
 #問題の詳細確認
+@login_required
 def content_problem(request, pk):
 
     problem = get_object_or_404(Problem, pk=pk)
-    return render(request, 'app/content.html', {'Problem': problem, 'pk': pk} )
+    return render(request, 'app/content.html', {'Problem': problem, 'pk': pk})
 
 
 
