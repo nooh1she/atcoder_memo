@@ -1,6 +1,7 @@
 from django.db.models.fields.related_descriptors import ManyToManyDescriptor
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic.list import ListView
+from django.db.models import Q
 import re
 
 from app.models import Problem, Tag
@@ -12,9 +13,7 @@ from django.contrib.auth.decorators import login_required
 #トップページ
 @login_required
 def top(request):
-    t = Tag.objects.get(tag_name = "a")
-    li = Problem.objects.filter(tags = t)
-    print(li)
+    print(type(Problem.objects.all()))
     return render(request, 'app/top.html')
 
 
@@ -55,8 +54,9 @@ def done_create(request):
         #tags = tags.split('#')[1::]
         tag_new = ''
         tag_list = []
-        for chara in re.split('#| |,', tag_visible):
+        for chara in list(filter(None, re.split('#| |,', tag_visible))):
             if (len(chara) <= 50):
+                print('chara:', chara)
                 tag_new += chara + ' '
 
                 #タグを重複して作らないように、既存のタグをチェックする
@@ -134,7 +134,7 @@ def done_modify(request, pk):
         tags = request.POST['tags']
         tag_new = ''
         tag_list = []
-        for chara in re.split('#| |,', tags):
+        for chara in list(filter(None, re.split('#| |,', tags))):
             if (len(chara) <= 50):
                 tag_new += chara + ' '
                 print('chara:', chara)
@@ -161,7 +161,10 @@ def done_modify(request, pk):
 @login_required
 def done_delete(request, pk):
 
-    Problem.objects.filter(pk = pk).delete()
+    problem = Problem.objects.get(pk = pk)
+    problem.tags.clear()
+    problem.delete()
+    #Problem.objects.filter(pk = pk).delete()
     return render(request, 'app/done_delete.html')
 
 
@@ -179,6 +182,32 @@ def content_problem(request, pk):
 
     problem = get_object_or_404(Problem, pk=pk)
     return render(request, 'app/content.html', {'Problem': problem, 'pk': pk})
+
+
+#問題の検索
+@login_required
+def search_problem(request):
+
+    if request.method == 'POST':
+        tags_search = request.POST['tags_search']
+
+        #タグを分離
+        tag_new = ''
+        tag_list = []
+        for chara in re.split('#| |,', tags_search):
+            if len(chara) <= 50:
+                tag_list.append(chara)
+
+        #Qにタグ情報を追加しOR検索
+        q_tags_search = Q()
+        for item in tag_list:
+            q_tags_search.add(Q(tags=Tag.objects.get(tag_name = item)), Q.OR)
+
+    #タグの重複を消す
+    search_result = Problem.objects.filter(q_tags_search).distinct()
+
+    return render(request, 'app/content.html', {'search_result': search_result})
+
 
 #ログアウトの確認
 def confirm_signout(request):
