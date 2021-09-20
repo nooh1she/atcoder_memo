@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "app/base.html" %}
 {% load static %}
 
 {% block content %}
@@ -7,44 +7,31 @@
 <form action="{% url 'app:done_modify' pk %}" method="post">
     {% csrf_token %}
     <ul>
-        <li>
-            <div class="card">
-                <label for="name">問題</label>
-                <input id="name" type="text" name="name" value="{{ Problem.name }}">
-            </div>
+        <li class="card">
+            <label for="name">問題</label>
+            <input id="name" type="text" name="name" value="{{ Problem.name }}">
         </li>
-        <li>
-            <div class="card">
-                <label for="site_url">URL</label>
-                <input id="site_url" type="text" name="site_url" value="{{ Problem.site_url}}"> 
-            </div>
+        <li class="card">
+            <label for="site_url">URL</label>
+            <input id="site_url" type="text" name="site_url" value="{{ Problem.site_url}}"> 
         </li>
-        <li>
-            <div class="card">
-                <label for="tags">タグ</label>
-                <input id="tags" type="text" name="tags" value="{{ Problem.tags }}"> 
-            </div>
+        <li class="card">
+            <label for="tags">タグ</label>
+            <input id="tags" type="text" name="tags" value="{{ Problem.tags_visible }}"> 
         </li>
-        <li>
-            <div class="card">
-                <label for="code">コード</label>
-                <textarea id="code" name="code" cols="30" rows="10">{{ Problem.code }}</textarea>
-            </div>
+        <li class="card">
+            <label for="code">コード</label>
+            <textarea id="code" name="code" cols="30" rows="10">{{ Problem.code }}</textarea>
         </li>
-        <li>
-            <div class="card">
-                <label for="memo">メモ</label>
-                <textarea id="memo" name="memo" cols="30" rows="10">{{ Problem.memo }}</textarea>
-            </div>
+        <li class="card">
+            <label for="memo">メモ</label>
+            <textarea id="memo" name="memo" cols="30" rows="10">{{ Problem.memo }}</textarea>
         </li>
-        <li>
+        <li class="card">
             <input type="submit" value="修正" class="button">
-            
         </li>
     </ul>    
 </form>
-
-
 
 <style>
     .title {
@@ -75,6 +62,8 @@
         position: relative;
         width: 80%;
         margin: 40px 3%;
+        margin-left: 10%;
+        margin-right: 10%;
     }
     .card input[type='text'], .card textarea {
         font-size: 12px;

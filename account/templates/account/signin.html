@@ -1,24 +1,101 @@
-{% extends 'base.html' %}
+{% extends 'account/base.html' %}
 
 {% block content %}
 <form method="POST">{% csrf_token %}
-    <h1>Please sign in</h1>
+    <div class="title">Please sign in</div>
     {% if error %}
         <div>{{ error }}</div>
     {% endif %}
     <ul>
-        <li>
-            <label for="inputName">UserName</label>
-            <input type="text" id="inputName" name="username" placeholder="UserName" required autofocus>
+        <li class="card">
+            <label for="username">ユーザー名</label>
+            <input id="username" type="text" name="username"　placeholder="UserName" required autofocus>
+        </li>
+        <li class="card">
+            <label for="password">パスワード</label>
+            <input id="password" type="password" name="password"　placeholder="Password" required>
         </li>
         <li>
-            <label for="inputPassword">Password</label>
-            <input type="password" id="inputPassword" name="password" placeholder="Password" required>
-        </li>
-        <li>
-            <button>ボタン</button>
+            <input type="submit" value="サインイン" class="button">
         </li>
     </ul>
 </form>
+
+<style>
+    .title {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
+
+        font-size: 36px;
+        color: rgb(100, 100, 100);
+    }
+    ul {
+        list-style-type: none!important;
+        padding-top: 0;
+        padding-left: 0;
+    }
+    li {
+        text-align: center;
+    }
+    label {
+        display: inline-block;
+        text-align: center;
+        width: 7em;
+        color: #40444b;
+        font-size: bold;
+    }
+    .card {
+        position: relative;
+        width: 60%;
+        margin: 40px 3%;
+        margin-left: 20%;
+        margin-right: 20%;
+    }
+    .card input[type='text'], .card input[type='password'] {
+        font-size: 12px;
+        line-height: 15px;
+        font-family: sans-serif;
+
+        box-sizing: border-box;
+        width: 100%;
+        padding: 0.3em;
+        transition: 0.1s;
+        letter-spacing: 0.5px;
+        color: rgb(0, 0, 0);
+        border: 2.5px solid #40444b;
+        border-radius: 4px;
+    }
+    .card input[type='text']:hover, .card input[type='password'] :hover {
+        border: 2.5px solid rgb(45, 155, 45);
+        outline: none;
+    }
+    .card input[type='text']:focus, .card input[type='password'] :focus {
+        border: 2.5px solid rgb(45, 155, 45);
+        outline: none;
+    }
+    
+    .button {
+        display       : inline-block;
+
+        border-radius : 5%;
+        font-size     : 18pt;
+        text-align    : center;
+        cursor        : pointer;
+        padding       : 12px 12px;
+        background    : rgb(255, 255, 255);
+
+        color         : #40444b;
+        line-height   : 1em;
+        transition    : .3s;
+        border        : 2px solid #40444b;
+    }
+    .button:hover {
+        color         : rgb(45, 155, 45);
+        border        : 2px solid rgb(45, 155, 45);
+    }
+    
+</style>
 
 {% endblock content %}
