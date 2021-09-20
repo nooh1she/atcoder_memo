@@ -71,8 +71,11 @@ def done_create(request):
         print('tag_new:', tag_new)
         print('tag_list:', tag_list)
 
-        #バリデーション
-        print("id:", request.user.id)
+        #nameバリデーション
+        #name = validation_name(name)
+
+        #urlバリデーション
+        #site_url = validation_url(site_url)
 
 
         #要素の登録
@@ -106,7 +109,7 @@ def done_create(request):
 #問題の編集画面への遷移
 @login_required
 def modify(request, pk):
-    problem = get_object_or_404(Problem, pk = pk)
+    problem = get_object_or_404(Problem, pk = pk, u_id = request.user.id)
     return render(request, 'app/modify.html', {'Problem': problem, 'pk': pk})
 
 
@@ -119,7 +122,7 @@ def done_modify(request, pk):
     for t in Tag.objects.all():
         all_tag_list[str(t)] = True
 
-    problem = get_object_or_404(Problem, pk = pk)
+    problem = get_object_or_404(Problem, pk = pk, u_id = request.user.id)
     if request.method == 'POST':
         #name
         problem.name = request.POST['name']
@@ -156,23 +159,30 @@ def done_modify(request, pk):
 
     return render(request, 'app/done_modify.html', {'Problem': problem, 'pk': pk})
 
+#問題削除の確認
+@login_required
+def confirm_delete(request, pk):
+    return render(request, 'app/confirm_delete.html', {'pk' : pk})
 
 #問題の削除
 @login_required
-def done_delete(request, pk):
+def delete(request, pk):
 
     problem = Problem.objects.get(pk = pk)
+
+    if problem.u_id != request.user.id:
+        return redirect('app:top')
+
     problem.tags.clear()
     problem.delete()
     #Problem.objects.filter(pk = pk).delete()
-    return render(request, 'app/done_delete.html')
+    return redirect('app:items')
 
 
 #問題の一覧画面への遷移
 @login_required
 def items_problem(request):
-
-    items = Problem.objects.all()
+    items = Problem.objects.filter(u_id = request.user.id)
     return render(request, 'app/items.html', {'items': items})
 
 
@@ -180,33 +190,49 @@ def items_problem(request):
 @login_required
 def content_problem(request, pk):
 
-    problem = get_object_or_404(Problem, pk=pk)
+    problem = get_object_or_404(Problem, pk = pk, u_id = request.user.id)
     return render(request, 'app/content.html', {'Problem': problem, 'pk': pk})
 
 
 #問題の検索
 @login_required
 def search_problem(request):
-
+    
     if request.method == 'POST':
+
+        #既存のタグ一覧
+        all_tag_list = {}
+        for t in Tag.objects.all():
+            all_tag_list[str(t)] = True
+
         tags_search = request.POST['tags_search']
+
+        if tags_search == '':
+            return redirect('app:items')
 
         #タグを分離
         tag_new = ''
         tag_list = []
-        for chara in re.split('#| |,', tags_search):
-            if len(chara) <= 50:
+        for chara in list(filter(None, re.split('#| |,', tags_search))):
+            if len(chara) <= 50 and chara in all_tag_list:
                 tag_list.append(chara)
 
         #Qにタグ情報を追加しOR検索
         q_tags_search = Q()
         for item in tag_list:
-            q_tags_search.add(Q(tags=Tag.objects.get(tag_name = item)), Q.OR)
+            q_tags_search.add(Q(u_id = request.user.id, tags=Tag.objects.get(tag_name = item)), Q.OR)
 
-    #タグの重複を消す
-    search_result = Problem.objects.filter(q_tags_search).distinct()
+        #タグの重複を消す
+        if len(tag_list) == 0:
+            search_result = []
+        else:
+            search_result = Problem.objects.filter(q_tags_search).distinct()
 
-    return render(request, 'app/content.html', {'search_result': search_result})
+        print(search_result)
+
+        return render(request, 'app/items.html', {'search_result': search_result})
+
+    return render(request, 'app/top.html')
 
 
 #ログアウトの確認
